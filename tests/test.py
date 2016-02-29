@@ -20,6 +20,12 @@ def test_occupy():
 
 def test_empty():
     seater = Seater()
+    res = seater.get_cmd("empty 5, 5 through 20, 20")
+    assert seater.number_occupied() == 5
 
-    res = seater.get_cmd("empty 10,10 through 12, 12")
+
+def test_toggle():
+    seater = Seater()
+    res = seater.get_cmd("toggle 100, 100 through 110, 110")
+    assert seater.number_occupied() ==
 
