@@ -1,23 +1,20 @@
 import re
 
-_author__ = "Aonghus Lawlor"
-__copyright__ = "Copyright (c) 2015"
-__credits__ = ["Aonghus Lawlor"]
-__license__ = "All Rights Reserved"
-__version__ = "1.0.0"
-__maintainer__ = "Aonghus Lawlor"
-__email__ = "aonghus.lawlor@insight-centre.org"
-__status__ = "Development"
+"""
+Brendan Dwyer
+Created on 24 Feb 2016
+"""
 
-# its a good idea to make a class to hold the various bits of data 
-# and functions we need to solve this problem
 class Seater:
     
     # this regular expression will give us the command and the rectangular bounding box
     # https://docs.python.org/2/library/re.html#re.MatchObject.group
     pat = re.compile("(.*) (\d+),(\d+) through (\d+),(\d+)")
+    occupied_seats = 0
+    unoccupied_seats = 1000000
+
     def __init__(self, size=1000):
-        # need to do some initialisation of data structures here...
+        self.matrix = [[0 for i in xrange(size)] for i in xrange(size)]
         return
     
     def get_cmd(self, line):
@@ -35,25 +32,32 @@ class Seater:
         elif cmd == 'empty':
             self.empty(x1, y1, x2, y2)
         else:
-            # YIKES!
             pass
         return
     
     def occupy(self, x1, y1, x2, y2):
-        #...
+        for i in xrange(x1, y1 + 1):
+            for j in xrange(x2, y2 + 1):
+                self.matrix[i], self.matrix[j] = 1, 1
+
         return
     
     def empty(self, x1, y1, x2, y2):
-        #...
-        return 
+        for i in xrange(x1, y1 + 1):
+            for j in xrange(x2, y2 + 1):
+                self.matrix[i], self.matrix[j] = 0, 0
+        return
     
     def toggle(self, x1, y1, x2, y2):
-        # ...
+        for i in xrange(x1, x2 + 1):
+            for j in xrange(y1, y2 + 1):
+                i = not i
+                j = not j
         return
     
     def number_occupied(self):
-        # ...
-        return
+        occupied = self.matrix.count(1)
+        return occupied
     
 if __name__ == '__main__':
     pass
